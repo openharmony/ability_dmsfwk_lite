@@ -1,10 +1,10 @@
 {
-    "name": "@ohos/distributedschedule_dms_fwk_lite",
+    "name": "@ohos/dmsfwk_lite",
     "description": "distributed abiltiy manager service",
     "homePage": "https://gitee.com/openharmony",
     "version": "3.1",
     "license": "Apache License 2.0",
-    "repository": "https://gitee.com/openharmony/distributedschedule_dms_fwk_lite",
+    "repository": "https://gitee.com/openharmony/ability_dmsfwk_lite",
     "publishAs": "code-segment",
     "segment": {
         "destPath": "foundation/ability/dmsfwk_lite"
