@@ -1,4 +1,4 @@
-# dms\_fwk\_lite<a name="EN-US_TOPIC_0000001128264105"></a>
+# dmsfwk\_lite<a name="EN-US_TOPIC_0000001128264105"></a>
 
 -   [Introduction](#section11660541593)
 -   [Directory Structure](#section1464106163817)
@@ -124,5 +124,5 @@ Call the  **startAbility**  method on the primary device to start the target FA 
 
 [Distributed Scheduler subsystem](en-us_topic_0000001115719369.md)
 
-**[dms\_fwk\_lite](https://gitee.com/openharmony/ability_dmsfwk_lite)**
+**[dmsfwk\_lite](https://gitee.com/openharmony/ability_dmsfwk_lite)**
 
