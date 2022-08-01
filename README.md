@@ -8,13 +8,13 @@
 
 ## Introduction<a name="section11660541593"></a>
 
-The Distributed Scheduler is used for cross-device component management. It allows the local device to access or control remote components, and enables application collaboration in distributed scenarios. The following figure shows the modules in the Distributed Scheduler.
+The Lite Distributed Scheduler is used for cross-device component management. It allows the local device to start remote feature ability. The following figure shows the modules in the Distributed Scheduler.
 
 ![](figures/en-us_image_0000001081284974.png)
 
 ## Directory Structure<a name="section1464106163817"></a>
 
-The following table describes the directory structure of the Distributed Scheduler.
+The following table describes the directory structure of the Lite Distributed Scheduler.
 
 **Table 1**  Directory structure of the major source code
 
@@ -27,27 +27,22 @@ The following table describes the directory structure of the Distributed Schedul
 </thead>
 <tbody><tr id="row64161056151718"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p4160914132218"><a name="p4160914132218"></a><a name="p4160914132218"></a>dmsfwk_lite</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p541645611177"><a name="p541645611177"></a><a name="p541645611177"></a>Implementation of the Distributed Scheduler</p>
-</td>
-</tr>
-<tr id="row104169564177"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p17416125614179"><a name="p17416125614179"></a><a name="p17416125614179"></a>safwk_lite</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p04163569170"><a name="p04163569170"></a><a name="p04163569170"></a>Implementation of the foundation process</p>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p541645611177"><a name="p541645611177"></a><a name="p541645611177"></a>Implementation of the Lite Distributed Scheduler</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-The source code directory structure of the Distributed Scheduler is as follows:
+The source code directory structure of the Lite Distributed Scheduler is as follows:
 
 ```
 ├── BUILD.gn
 ├── include
-│  ├── dmslite.h        # Header file for the open APIs provided by the Distributed Scheduler
-│  ├── dmslite_check_remote_permission.h     # Header file for the permission management module of the Distributed Scheduler
-│  ├── dmslite_famgr.h                       # Header file for the FA management module of the Distributed Scheduler
-│  ├── dmslite_inner_common.h                # Internal common file for the Distributed Scheduler
-│  ├── dmslite.h                             # Header file for the implementation of the Distributed Scheduler Service (also called the Distributed Manager Service)
+│  ├── dmslite.h        # Header file for the open APIs provided by the Lite Distributed Scheduler
+│  ├── dmslite_check_remote_permission.h     # Header file for the permission management module of the Lite Distributed Scheduler
+│  ├── dmslite_famgr.h                       # Header file for the FA management module of the Lite Distributed Scheduler
+│  ├── dmslite_inner_common.h                # Internal common file for the Lite Distributed Scheduler
+│  ├── dmslite.h                             # Header file for the implementation of the Lite Distributed Scheduler Service (also called the Distributed Manager Service)
 │  ├── dmslite_log.h                         # Header file for the log module
 │  ├── dmslite_msg_parser.h                  # Header file for the distributed message parsing module
 │  ├── dmslite_tlv_common.h                  # Header file for the TLV data parsing module
@@ -74,14 +69,14 @@ The source code directory structure of the Distributed Scheduler is as follows:
 
 **Limitations and constraints on remote startup**:
 
--   Only Feature Abilities \(FAs\) can be started remotely. Remote startup is unavailable to abilities using the Service template.
+-   Only Feature Abilities \(FAs\) can be started remotely. 
 -   Before the remote startup, ensure that the distributed networking between the primary and secondary devices is successful. Otherwise, the remote startup fails.
 
 ## Usage<a name="section10729231131110"></a>
 
 -   **Compiling and Building the Distributed Scheduler**
 
-The code of the Distributed Scheduler is stored in the following directory:
+The code of the Lite Distributed Scheduler is stored in the following directory:
 
 ```
 foundation/ability/dmsfwk_lite
@@ -122,7 +117,7 @@ Call the  **startAbility**  method on the primary device to start the target FA 
 
 ## Repositories Involved<a name="section176111311166"></a>
 
-[Distributed Scheduler subsystem](en-us_topic_0000001115719369.md)
+**Lite Distributed Scheduler subsystem**
 
-**[dmsfwk\_lite](https://gitee.com/openharmony/ability_dmsfwk_lite)**
+[dmsfwk\_lite]
 
