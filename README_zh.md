@@ -16,7 +16,7 @@
 
 分布式任务调度源代码目录结构如下表所示：
 
-**表1 **主要源代码目录结构
+**表1**主要源代码目录结构
 
 <a name="table43531856201716"></a>
 <table><thead align="left"><tr id="row20416556201718"><th class="cellrowborder" valign="top" width="50%" id="mcps1.1.3.1.1"><p id="p10416456121716"><a name="p10416456121716"></a><a name="p10416456121716"></a>名称</p>
