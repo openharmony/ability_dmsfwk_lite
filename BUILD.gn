@@ -49,9 +49,9 @@ if (ohos_kernel_type == "liteos_a" || ohos_kernel_type == "linux") {
       "//foundation/communication/dsoftbus/interfaces/kits/bus_center",
       "//foundation/communication/dsoftbus/interfaces/kits/common",
       "//foundation/communication/dsoftbus/interfaces/kits/transport",
-      "//foundation/distributedschedule/samgr_lite/interfaces/innerkits",
-      "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
-      "//foundation/distributedschedule/samgr_lite/interfaces/kits/registry",
+      "//foundation/systemabilitymgr/samgr_lite/interfaces/innerkits",
+      "//foundation/systemabilitymgr/samgr_lite/interfaces/kits/samgr",
+      "//foundation/systemabilitymgr/samgr_lite/interfaces/kits/registry",
       "//third_party/bounds_checking_function/include",
       "//third_party/cJSON",
       "//utils/native/lite/include",
@@ -63,7 +63,7 @@ if (ohos_kernel_type == "liteos_a" || ohos_kernel_type == "linux") {
       "${aafwk_lite_path}/frameworks/abilitymgr_lite:aafwk_abilityManager_lite",
       "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
       "//foundation/communication/dsoftbus/sdk:softbus_client",
-      "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+      "//foundation/systemabilitymgr/samgr_lite/samgr:samgr",
       "//third_party/bounds_checking_function:libsec_shared",
     ]
   }
