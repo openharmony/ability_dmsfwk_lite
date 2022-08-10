@@ -8,13 +8,13 @@
 
 ## 简介<a name="section11660541593"></a>
 
-分布式任务调度模块负责跨设备组件管理，提供访问和控制远程组件的能力，支持分布式场景下的应用协同。分布式调度模块组成如下图所示：
+轻量级分布式组件管理模块负责跨设备启动FA的能力，支持分布式场景下的应用协同。轻量级分布式调度模块组成如下图所示：
 
 ![](figures/zh-cn_image_0000001081284974.png)
 
 ## 目录<a name="section1464106163817"></a>
 
-分布式任务调度源代码目录结构如下表所示：
+轻量级分布式组件管理源代码目录结构如下表所示：
 
 **表1**主要源代码目录结构
 
@@ -27,27 +27,22 @@
 </thead>
 <tbody><tr id="row64161056151718"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p4160914132218"><a name="p4160914132218"></a><a name="p4160914132218"></a>dmsfwk_lite</p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p541645611177"><a name="p541645611177"></a><a name="p541645611177"></a>分布式任务调度实现</p>
-</td>
-</tr>
-<tr id="row104169564177"><td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.1 "><p id="p17416125614179"><a name="p17416125614179"></a><a name="p17416125614179"></a>safwk_lite</p>
-</td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p04163569170"><a name="p04163569170"></a><a name="p04163569170"></a>foundation进程实现</p>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.1.3.1.2 "><p id="p541645611177"><a name="p541645611177"></a><a name="p541645611177"></a>轻量级分布式组件管理</p>
 </td>
 </tr>
 </tbody>
 </table>
 
-其中轻量级分布式任务调度的源代码目录结构如下：
+其中轻量级分布式组件管理的源代码目录结构如下：
 
 ```
 ├── BUILD.gn
 ├── include
-│  ├── dmslite.h        # 分布式调度对外接口
-│  ├── dmslite_check_remote_permission.h     # 分布式调度权限管理模块
-│  ├── dmslite_famgr.h                       # 分布式调度FA管理模块
-│  ├── dmslite_inner_common.h                # 分布式调度内部通用文件
-│  ├── dmslite.h                             # 分布式调度服务实现
+│  ├── dmslite.h        # 轻量级分布式组件管理对外接口
+│  ├── dmslite_check_remote_permission.h     # 轻量级分布式组件管理权限管理模块
+│  ├── dmslite_famgr.h                       # 轻量级分布式组件管理FA管理模块
+│  ├── dmslite_inner_common.h                # 轻量级分布式组件管理内部通用文件
+│  ├── dmslite.h                             # 轻量级分布式组件管理服务实现
 │  ├── dmslite_log.h                         # 日志模块
 │  ├── dmslite_parser.h                  # 分布式消息解析模块
 │  ├── dmslite_tlv_common.h                  # TLV格式数据解析模块
@@ -74,14 +69,14 @@
 
 **远程启动的约束与限制：**
 
--   支持远程启动FA，不支持远程启动SA
+-   支持远程启动FA
 -   远程启动前必须确保主设备与从设备间分布式组网成功，否则无法远程启动
 
 ## 使用<a name="section10729231131110"></a>
 
--   **分布式任务调度模块编译**
+-   **轻量级分布式组件管理模块编译**
 
-分布式任务调度模块，其代码所在目录如下：
+轻量级分布式组件管理模块，其代码所在目录如下：
 
 ```
 foundation/ability/dmsfwk_lite
@@ -122,7 +117,7 @@ startAbility(want); // 按照Want启动指定FA，want参数命名以实际开�
 
 ## 涉及仓<a name="section176111311166"></a>
 
-**[分布式任务调度子系统](zh-cn_topic_0000001115719369.md)**
+**轻量级分布式组件管理**
 
-[dmsfwk\_lite](https://gitee.com/openharmony/ability_dmsfwk_lite)
+[dmsfwk\_lite]
 
