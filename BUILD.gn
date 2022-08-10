@@ -46,6 +46,7 @@ if (ohos_kernel_type == "liteos_a" || ohos_kernel_type == "linux") {
       "${aafwk_lite_path}/interfaces/kits/want_lite",
       "${appexecfwk_lite_path}/interfaces/kits/bundle_lite",
       "${appexecfwk_lite_path}/interfaces/inner_api/bundlemgr_lite",
+      "//commonlibrary/utils_lite/include",
       "//foundation/communication/dsoftbus/interfaces/kits/bus_center",
       "//foundation/communication/dsoftbus/interfaces/kits/common",
       "//foundation/communication/dsoftbus/interfaces/kits/transport",
@@ -54,7 +55,6 @@ if (ohos_kernel_type == "liteos_a" || ohos_kernel_type == "linux") {
       "//foundation/systemabilitymgr/samgr_lite/interfaces/kits/registry",
       "//third_party/bounds_checking_function/include",
       "//third_party/cJSON",
-      "//utils/native/lite/include",
     ]
 
     deps = []
