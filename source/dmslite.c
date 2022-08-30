@@ -77,7 +77,7 @@ static TaskConfig GetTaskConfig(Service *service)
     return config;
 }
 
-static void Init()
+static void Init(void)
 {
     BOOL result = SAMGR_GetInstance()->RegisterService((Service *)&g_distributedService);
     HILOGI("[dms service start %s]", result ? "success" : "failed");
