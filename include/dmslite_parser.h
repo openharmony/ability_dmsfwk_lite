@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 /**
-* @brief The entry of processing commucation or xts testing
+* @brief The entry of processing communication or xts testing
 * @param commuMessage incoming message from remote
 * @param dmsFeatureCallback callbacks for notification
 * @return DmsLiteCommonErrorCode

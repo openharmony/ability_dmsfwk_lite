@@ -175,15 +175,18 @@ int32_t HandleSessionOpened(int32_t sessionId)
 
 void OnMessageReceived(int32_t sessionId, const void *data, uint32_t len)
 {
+    (void)sessionId;
+    (void)data;
+    (void)len;
     return;
 }
 
-int32_t CreateDMSSessionServer()
+int32_t CreateDMSSessionServer(void)
 {
     return CreateSessionServer(DMS_MODULE_NAME, DMS_SESSION_NAME, &g_sessionCallback);
 }
 
-int32_t CloseDMSSessionServer()
+int32_t CloseDMSSessionServer(void)
 {
     return RemoveSessionServer(DMS_MODULE_NAME, DMS_SESSION_NAME);
 }
@@ -218,7 +221,7 @@ int32_t SendDmsMessage(const char *data, int32_t len, const char *deviceId, IDms
     return EC_SUCCESS;
 }
 
-void CloseDMSSession()
+void CloseDMSSession(void)
 {
     CloseSession(g_curSessionId);
     g_curSessionId = INVALID_SESSION_ID;
@@ -238,14 +241,14 @@ void InvokeCallback(const void *data, int32_t result)
     g_listener->OnResultCallback(data, result);
 }
 
-static bool IsTimeout()
+static bool IsTimeout(void)
 {
     time_t now = time(NULL);
     HILOGI("[IsTimeout diff %f]", difftime(now, g_begin));
     return ((int)difftime(now, g_begin)) - TIMEOUT >= 0;
 }
 
-bool IsDmsBusy()
+bool IsDmsBusy(void)
 {
     if (g_curBusy && IsTimeout() && g_curSessionId >= 0) {
         CloseDMSSession();
