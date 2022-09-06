@@ -102,7 +102,7 @@ static BOOL OnMessage(Feature *feature, Request *request)
             HandleBytesReceived(request->msgValue, request->data, request->len);
             break;
         default: {
-            HILOGW("[Unkonwn msgId = %d]", request->msgId);
+            HILOGW("[Unknown msgId = %d]", request->msgId);
             break;
         }
     }

@@ -285,7 +285,7 @@ int32_t ProcessCommuMsg(const CommuMessage *commuMessage, const IDmsFeatureCallb
             break;
         }
         default: {
-            HILOGW("[Unkonwn command id %hu]", commandId);
+            HILOGW("[Unknown command id %hu]", commandId);
             errCode = DMS_EC_UNKNOWN_COMMAND_ID;
             break;
         }
