@@ -26,7 +26,6 @@
             "samgr_lite",
             "bundle_framework_lite",
             "ability_lite",
-            "softbus_lite",
             "huks"
             ],
             "third_party": [
