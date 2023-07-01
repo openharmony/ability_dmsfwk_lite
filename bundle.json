@@ -21,7 +21,7 @@
         "ram": "",
         "deps": {
             "components": [
-            "utils_base",
+            "utils_lite",
             "hilog",
             "samgr_lite",
             "bundle_framework_lite",
