@@ -22,7 +22,7 @@
         "deps": {
             "components": [
             "utils_lite",
-            "hilog",
+            "hilog_lite",
             "samgr_lite",
             "bundle_framework_lite",
             "ability_lite",
