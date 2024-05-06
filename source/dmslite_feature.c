@@ -21,7 +21,7 @@
 
 #include "ohos_init.h"
 #include "samgr_lite.h"
-#include "securec.h" 
+#include "securec.h"
 
 #define EMPTY_FEATURE_NAME ""
 

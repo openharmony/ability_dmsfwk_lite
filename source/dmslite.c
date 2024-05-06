@@ -62,12 +62,7 @@ static BOOL MessageHandle(Service *service, Request *request)
     }
 
     /* process for a specific service-level msgId can be added below */
-    switch (request->msgId) {
-        default: {
-            HILOGW("[Unknown msgId = %d]", request->msgId);
-            break;
-        }
-    }
+    HILOGW("[Unknown msgId = %d]", request->msgId);
     return TRUE;
 }
 
