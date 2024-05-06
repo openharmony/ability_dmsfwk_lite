@@ -71,6 +71,22 @@ static inline bool IsBigEndian()
     } while (0)
 #endif
 
+static const uint32_t ONE_BITE = 1;
+static const uint32_t TWO_BITE = 2;
+static const uint32_t THREE_BITE = 3;
+static const uint32_t FOUR_BITE = 4;
+static const uint32_t FIVE_BITE = 5;
+static const uint32_t SIX_BITE = 6;
+static const uint32_t SEVEN_BITE = 7;
+
+static const uint32_t BITS_NUM_OF_PER_BITE = 8;
+static const uint32_t BITS_NUM_OF_TWO_BITE = BITS_NUM_OF_PER_BITE * TWO_BITE;
+static const uint32_t BITS_NUM_OF_THREE_BITE = BITS_NUM_OF_PER_BITE * THREE_BITE;
+static const uint32_t BITS_NUM_OF_FOUR_BITE = BITS_NUM_OF_PER_BITE * FOUR_BITE;
+static const uint32_t BITS_NUM_OF_FIVE_BITE = BITS_NUM_OF_PER_BITE * FIVE_BITE;
+static const uint32_t BITS_NUM_OF_SIX_BITE = BITS_NUM_OF_PER_BITE * SIX_BITE;
+static const uint32_t BITS_NUM_OF_SEVEN_BITE = BITS_NUM_OF_PER_BITE * SEVEN_BITE;
+
 /*
  * convert u16 data from Big Endian to Little Endian
  * dataIn: pointer to start of u16 data
@@ -78,7 +94,7 @@ static inline bool IsBigEndian()
  */
 static inline void Convert16DataBig2Little(const uint8_t *dataIn, uint16_t *dataOut)
 {
-    *dataOut  = ((uint16_t)(*dataIn++) << 8);
+    *dataOut  = ((uint16_t)(*dataIn++) << BITS_NUM_OF_PER_BITE);
     *dataOut |=  (uint16_t)(*dataIn);
 }
 
@@ -89,9 +105,9 @@ static inline void Convert16DataBig2Little(const uint8_t *dataIn, uint16_t *data
  */
 static inline void Convert32DataBig2Little(const uint8_t *dataIn, uint32_t *dataOut)
 {
-    *dataOut  = ((uint32_t)(*dataIn++) << 24);
-    *dataOut |= ((uint32_t)(*dataIn++) << 16);
-    *dataOut |= ((uint32_t)(*dataIn++) << 8);
+    *dataOut  = ((uint32_t)(*dataIn++) << BITS_NUM_OF_THREE_BITE);
+    *dataOut |= ((uint32_t)(*dataIn++) << BITS_NUM_OF_TWO_BITE);
+    *dataOut |= ((uint32_t)(*dataIn++) << BITS_NUM_OF_PER_BITE);
     *dataOut |=  (uint32_t)(*dataIn);
 }
 
@@ -102,13 +118,13 @@ static inline void Convert32DataBig2Little(const uint8_t *dataIn, uint32_t *data
  */
 static inline void Convert64DataBig2Little(const uint8_t *dataIn, uint64_t *dataOut)
 {
-    *dataOut  = ((uint64_t)(*dataIn++) << 56);
-    *dataOut |= ((uint64_t)(*dataIn++) << 48);
-    *dataOut |= ((uint64_t)(*dataIn++) << 40);
-    *dataOut |= ((uint64_t)(*dataIn++) << 32);
-    *dataOut |= ((uint64_t)(*dataIn++) << 24);
-    *dataOut |= ((uint64_t)(*dataIn++) << 16);
-    *dataOut |= ((uint64_t)(*dataIn++) << 8);
+    *dataOut  = ((uint64_t)(*dataIn++) << BITS_NUM_OF_SEVEN_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_SIX_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_FIVE_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_FOUR_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_THREE_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_TWO_BITE);
+    *dataOut |= ((uint64_t)(*dataIn++) << BITS_NUM_OF_PER_BITE);
     *dataOut |=  (uint64_t)(*dataIn);
 }
 
@@ -119,7 +135,7 @@ static inline void Convert64DataBig2Little(const uint8_t *dataIn, uint64_t *data
  */
 static inline void Convert16DataLittle2Big(const uint8_t *dataIn, uint8_t *dataOut)
 {
-    *dataOut++ = *(dataIn + 1);
+    *dataOut++ = *(dataIn + ONE_BITE);
     *dataOut   = *(dataIn);
 }
 
@@ -130,9 +146,9 @@ static inline void Convert16DataLittle2Big(const uint8_t *dataIn, uint8_t *dataO
  */
 static inline void Convert32DataLittle2Big(const uint8_t *dataIn, uint8_t *dataOut)
 {
-    *dataOut++ = *(dataIn + 3);
-    *dataOut++ = *(dataIn + 2);
-    *dataOut++ = *(dataIn + 1);
+    *dataOut++ = *(dataIn + THREE_BITE);
+    *dataOut++ = *(dataIn + TWO_BITE);
+    *dataOut++ = *(dataIn + ONE_BITE);
     *dataOut   = *(dataIn);
 }
 
@@ -143,13 +159,13 @@ static inline void Convert32DataLittle2Big(const uint8_t *dataIn, uint8_t *dataO
  */
 static inline void Convert64DataLittle2Big(const uint8_t *dataIn, uint8_t *dataOut)
 {
-    *dataOut++ = *(dataIn + 7);
-    *dataOut++ = *(dataIn + 6);
-    *dataOut++ = *(dataIn + 5);
-    *dataOut++ = *(dataIn + 4);
-    *dataOut++ = *(dataIn + 3);
-    *dataOut++ = *(dataIn + 2);
-    *dataOut++ = *(dataIn + 1);
+    *dataOut++ = *(dataIn + SEVEN_BITE);
+    *dataOut++ = *(dataIn + SIX_BITE);
+    *dataOut++ = *(dataIn + FIVE_BITE);
+    *dataOut++ = *(dataIn + FOUR_BITE);
+    *dataOut++ = *(dataIn + THREE_BITE);
+    *dataOut++ = *(dataIn + TWO_BITE);
+    *dataOut++ = *(dataIn + ONE_BITE);
     *dataOut   = *(dataIn);
 }
 #endif // OHOS_DISTRIBUTEDSCHEDULE_DMSLITE_UTILS_H
