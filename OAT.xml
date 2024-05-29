@@ -56,7 +56,8 @@ Note:If the text contains special characters, please escape them according to th
         <licensefile></licensefile>
         <filefilterlist>
             <filefilter name="copyrightPolicyFilter" desc="Filters for binary file policie" >
-                <filteritem type="filepath" name="figures/.*.png" desc="png file"/>
+                <filteritem type="filepath" name="figures/en-us_image_0000001081284974.png" desc="icon"/>
+                <filteritem type="filepath" name="figures/zh-cn_image_0000001081284974.png" desc="icon"/>
             </filefilter>
         </filefilterlist>
     </oatconfig>
