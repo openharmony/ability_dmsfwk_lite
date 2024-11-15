@@ -83,9 +83,7 @@ HWTEST_F(FamgrTest, StartRemoteAbility_001, TestSize.Level1) {
     PreprareBuild();
 
     Want want;
-    if (FillWant(&want, "ohos.dms.example", "MainAbility") != 0) {
-        return;
-    }
+    ASSERT_EQ(FillWant(&want, "ohos.dms.example", "MainAbility"), 0);
 
     CallerInfo callerInfo = {
         .uid = 0
@@ -114,9 +112,7 @@ HWTEST_F(FamgrTest, StartRemoteAbility_002, TestSize.Level1) {
     PreprareBuild();
 
     Want want;
-    if (FillWant(&want, "ohos.dms.example", "MainAbility") != 0) {
-        return;
-    }
+    ASSERT_EQ(FillWant(&want, "ohos.dms.example", "MainAbility"), 0);
     StartRemoteAbility(&want, nullptr, nullptr);
     auto onTlvParseDone = [] (int8_t errCode, const void *dmsMsg) {
         EXPECT_NE(errCode, DMS_TLV_SUCCESS);
