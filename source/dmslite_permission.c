@@ -65,13 +65,11 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
     if (permissionCheckInfo == NULL) {
         return DMS_EC_FAILURE;
     }
-
     BundleInfo bundleInfo;
     if (memset_s(&bundleInfo, sizeof(BundleInfo), 0x00, sizeof(BundleInfo)) != EOK) {
         HILOGE("[bundleInfo memset failed]");
         return DMS_EC_FAILURE;
     }
-
     int32_t errCode;
 #ifndef WEARABLE_PRODUCT
     uid_t callerUid = getuid();
@@ -81,6 +79,9 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
         if (!GetBmsInterface(&bmsInterface)) {
             HILOGE("[GetBmsInterface query null]");
             return DMS_EC_GET_BMS_FAILURE;
+        }
+        if (permissionCheckInfo->calleeBundleName == NULL) {
+            return DMS_EC_FAILURE;
         }
         errCode = bmsInterface->GetBundleInfo(permissionCheckInfo->calleeBundleName,
             GET_BUNDLE_WITHOUT_ABILITIES, &bundleInfo);
@@ -99,7 +100,6 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
         HILOGE("[GetBundleInfo errCode = %d]", errCode);
         return DMS_EC_GET_BUNDLEINFO_FAILURE;
     }
-
     /* appId: bundleName + "_" + signature */
     const char *calleeSignature = bundleInfo.appId + strlen(permissionCheckInfo->calleeBundleName)
         + DELIMITER_LENGTH;
@@ -108,12 +108,10 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
         HILOGE("[Signature is null]");
         return DMS_EC_FAILURE;
     }
-
     if (strcmp(permissionCheckInfo->callerSignature, calleeSignature) != 0) {
         HILOGE("[Signature unmatched]");
         return DMS_EC_CHECK_PERMISSION_FAILURE;
     }
-
     return DMS_EC_SUCCESS;
 }
 
