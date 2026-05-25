@@ -101,8 +101,25 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
         return DMS_EC_GET_BUNDLEINFO_FAILURE;
     }
     /* appId: bundleName + "_" + signature */
-    const char *calleeSignature = bundleInfo.appId + strlen(permissionCheckInfo->calleeBundleName)
-        + DELIMITER_LENGTH;
+    if (bundleInfo.appId == NULL || permissionCheckInfo->calleeBundleName == NULL) {
+        HILOGE("[Invalid appId or calleeBundleName]");
+        ClearBundleInfo(&bundleInfo);
+        return DMS_EC_FAILURE;
+    }
+    size_t bundleNameLen = strlen(permissionCheckInfo->calleeBundleName);
+    size_t appIdLen = strlen(bundleInfo.appId);
+    if (bundleNameLen + DELIMITER_LENGTH >= appIdLen) {
+        HILOGE("[Invalid appId format]");
+        ClearBundleInfo(&bundleInfo);
+        return DMS_EC_FAILURE;
+    }
+    if (strncmp(bundleInfo.appId, permissionCheckInfo->calleeBundleName, bundleNameLen) != 0 ||
+        bundleInfo.appId[bundleNameLen] != '_') {
+        HILOGE("[AppId does not start with calleeBundleName_]");
+        ClearBundleInfo(&bundleInfo);
+        return DMS_EC_FAILURE;
+    }
+    const char *calleeSignature = bundleInfo.appId + bundleNameLen + DELIMITER_LENGTH;
     ClearBundleInfo(&bundleInfo);
     if ((permissionCheckInfo->callerSignature == NULL) || (calleeSignature == NULL)) {
         HILOGE("[Signature is null]");
