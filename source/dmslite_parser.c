@@ -49,6 +49,10 @@ static inline void TlvByteToLength(uint8_t byte, uint16_t *len)
 static TlvErrorCode TlvBytesToLength(const uint8_t *bytesBuffer, uint16_t bufLength,
     uint16_t *length, uint8_t *bytesNumber)
 {
+    if (bytesBuffer == NULL || length == NULL || bytesNumber == NULL) {
+        return DMS_TLV_ERR_PARAM;
+    }
+
     uint8_t bytesNum = 0;
     uint16_t len = 0;
     /* compute TLV's L, when value > 127, the L should be two bytes, else L is one byte long
@@ -80,6 +84,10 @@ static TlvErrorCode TlvBytesToLength(const uint8_t *bytesBuffer, uint16_t bufLen
 static TlvErrorCode TlvFillNode(const uint8_t *byteBuffer, uint16_t bufLength,
     TlvNode *node, uint16_t *actualHandledLen)
 {
+    if (byteBuffer == NULL || node == NULL || actualHandledLen == NULL) {
+        return DMS_TLV_ERR_PARAM;
+    }
+
     if (bufLength <= TLV_TYPE_LEN) {
         HILOGE("[Bad bufLength %hu]", bufLength);
         return DMS_TLV_ERR_LEN;
@@ -102,13 +110,12 @@ static TlvErrorCode TlvFillNode(const uint8_t *byteBuffer, uint16_t bufLength,
     curTlvNodeLen += bytesNum;
 
     /* fill TLV's V(value) */
-    node->value = byteBuffer + curTlvNodeLen;
     curTlvNodeLen += length;
     if (curTlvNodeLen > bufLength) {
         return DMS_TLV_ERR_LEN;
-    } else {
-        *actualHandledLen = curTlvNodeLen;
     }
+    node->value = byteBuffer + (curTlvNodeLen - length);
+    *actualHandledLen = curTlvNodeLen;
 
     return DMS_TLV_SUCCESS;
 }
