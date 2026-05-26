@@ -60,6 +60,59 @@ static bool GetBmsInterface(struct BmsServerProxy **bmsInterface)
 }
 #endif
 
+static int32_t GetCalleeBundleInfo(const char *calleeBundleName, BundleInfo *bundleInfo)
+{
+    int32_t errCode;
+#ifndef WEARABLE_PRODUCT
+    uid_t callerUid = getuid();
+    if (callerUid == FOUNDATION_UID) {
+        struct BmsServerProxy *bmsInterface = NULL;
+        if (!GetBmsInterface(&bmsInterface)) {
+            HILOGE("[GetBmsInterface query null]");
+            return DMS_EC_GET_BMS_FAILURE;
+        }
+        if (calleeBundleName == NULL) {
+            return DMS_EC_FAILURE;
+        }
+        errCode = bmsInterface->GetBundleInfo(calleeBundleName,
+            GET_BUNDLE_WITHOUT_ABILITIES, bundleInfo);
+    } else if (callerUid == SHELL_UID) {
+        errCode = GetBundleInfo(calleeBundleName, GET_BUNDLE_WITHOUT_ABILITIES, bundleInfo);
+    } else {
+        errCode = EC_FAILURE;
+    }
+#else
+    errCode = GetBundleInfo(calleeBundleName, GET_BUNDLE_WITHOUT_ABILITIES, bundleInfo);
+#endif
+    if (errCode != EC_SUCCESS) {
+        HILOGE("[GetBundleInfo errCode = %d]", errCode);
+        return DMS_EC_GET_BUNDLEINFO_FAILURE;
+    }
+    return DMS_EC_SUCCESS;
+}
+
+static int32_t ExtractCalleeSignature(const BundleInfo *bundleInfo, const char *calleeBundleName,
+    const char **calleeSignature)
+{
+    if (bundleInfo == NULL || bundleInfo->appId == NULL || calleeBundleName == NULL) {
+        HILOGE("[Invalid parameter]");
+        return DMS_EC_FAILURE;
+    }
+    size_t bundleNameLen = strlen(calleeBundleName);
+    size_t appIdLen = strlen(bundleInfo->appId);
+    if (bundleNameLen + DELIMITER_LENGTH >= appIdLen) {
+        HILOGE("[Invalid appId format]");
+        return DMS_EC_FAILURE;
+    }
+    if (strncmp(bundleInfo->appId, calleeBundleName, bundleNameLen) != 0 ||
+        bundleInfo->appId[bundleNameLen] != '_') {
+        HILOGE("[AppId does not start with calleeBundleName_]");
+        return DMS_EC_FAILURE;
+    }
+    *calleeSignature = bundleInfo->appId + bundleNameLen + DELIMITER_LENGTH;
+    return DMS_EC_SUCCESS;
+}
+
 int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
 {
     if (permissionCheckInfo == NULL) {
@@ -70,48 +123,27 @@ int32_t CheckRemotePermission(const PermissionCheckInfo *permissionCheckInfo)
         HILOGE("[bundleInfo memset failed]");
         return DMS_EC_FAILURE;
     }
-    int32_t errCode;
-#ifndef WEARABLE_PRODUCT
-    uid_t callerUid = getuid();
-    if (callerUid == FOUNDATION_UID) {
-        /* inner-process mode */
-        struct BmsServerProxy *bmsInterface = NULL;
-        if (!GetBmsInterface(&bmsInterface)) {
-            HILOGE("[GetBmsInterface query null]");
-            return DMS_EC_GET_BMS_FAILURE;
-        }
-        if (permissionCheckInfo->calleeBundleName == NULL) {
-            return DMS_EC_FAILURE;
-        }
-        errCode = bmsInterface->GetBundleInfo(permissionCheckInfo->calleeBundleName,
-            GET_BUNDLE_WITHOUT_ABILITIES, &bundleInfo);
-    } else if (callerUid == SHELL_UID) {
-        /* inter-process mode (mainly called in xts testsuit process started by shell) */
-        errCode = GetBundleInfo(permissionCheckInfo->calleeBundleName,
-            GET_BUNDLE_WITHOUT_ABILITIES, &bundleInfo);
-    } else {
-        errCode = EC_FAILURE;
+    int32_t ret = GetCalleeBundleInfo(permissionCheckInfo->calleeBundleName, &bundleInfo);
+    if (ret != DMS_EC_SUCCESS) {
+        return ret;
     }
-#else
-    errCode = GetBundleInfo(permissionCheckInfo->calleeBundleName,
-        GET_BUNDLE_WITHOUT_ABILITIES, &bundleInfo);
-#endif
-    if (errCode != EC_SUCCESS) {
-        HILOGE("[GetBundleInfo errCode = %d]", errCode);
-        return DMS_EC_GET_BUNDLEINFO_FAILURE;
+    const char *calleeSignature = NULL;
+    ret = ExtractCalleeSignature(&bundleInfo, permissionCheckInfo->calleeBundleName, &calleeSignature);
+    if (ret != DMS_EC_SUCCESS) {
+        ClearBundleInfo(&bundleInfo);
+        return ret;
     }
-    /* appId: bundleName + "_" + signature */
-    const char *calleeSignature = bundleInfo.appId + strlen(permissionCheckInfo->calleeBundleName)
-        + DELIMITER_LENGTH;
-    ClearBundleInfo(&bundleInfo);
-    if ((permissionCheckInfo->callerSignature == NULL) || (calleeSignature == NULL)) {
+    if (permissionCheckInfo->callerSignature == NULL || calleeSignature == NULL) {
         HILOGE("[Signature is null]");
+        ClearBundleInfo(&bundleInfo);
         return DMS_EC_FAILURE;
     }
     if (strcmp(permissionCheckInfo->callerSignature, calleeSignature) != 0) {
         HILOGE("[Signature unmatched]");
+        ClearBundleInfo(&bundleInfo);
         return DMS_EC_CHECK_PERMISSION_FAILURE;
     }
+    ClearBundleInfo(&bundleInfo);
     return DMS_EC_SUCCESS;
 }
 
